@@ -1,11 +1,11 @@
 /**
- * @file	Inc/ringbuf.h
+ * @file	include/ringbuf.h
  *
  * @brief	Объявления структур ифункций для работы с кольцевым буфером.
  *
  * @author	Vasily Yurchenko <Vasiliy.Yurchenko@t-platforms.ru>
  *
- * @copyright	Copyright (C) 2019, T-Platforms. All rights reserved.
+ * @copyright	Copyright (C) 2019. All rights reserved.
  */
 
 #ifndef __RINGBUF_H

@@ -1,16 +1,24 @@
 /**
- * @file	Src/ringbuf.c
+ * @file	src/ringbuf.c
  *
  * @brief	Определения функций работы с кольцевым буфером.
  *
  * @author	Vasily Yurchenko <Vasiliy.Yurchenko@t-platforms.ru>
  *
- * @copyright	Copyright (C) 2019, T-Platforms. All rights reserved.
+ * @copyright	Copyright (C) 2019. All rights reserved.
  */
 
 #include <string.h>
 
-#include "types.h"
+#include "ringbuf.h"
+
+/** Сгенерировать ошибку времени компиляции, если условие истино */
+#define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
+
+/** Сгенерировать ошибку времени компиляции, если значение выражения не является степенью 2 */
+#define BUILD_BUG_ON_NOT_POWER_OF_2(n)			\
+	BUILD_BUG_ON((n) == 0 || ((n) & ((n) - 1)) != 0)
+
 
 void rb_init_ring_buffer(struct ring_buf *rb)
 {
