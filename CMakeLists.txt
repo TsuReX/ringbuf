@@ -6,7 +6,7 @@ set(PROJ_NAME ringbuf)
 
 project(${PROJ_NAME} C)
 
-set(CMAKE_C_FLAGS "-Wall -Werror")
+set(CMAKE_C_FLAGS	"${CMAKE_C_FLAGS} -ggdb -g -flto -Werror -Wall")
 
 set(C_SRC	"src/ringbuf.c")
 
