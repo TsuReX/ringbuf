@@ -60,6 +60,18 @@ static inline size_t rb_get_data_size(const struct ring_buf *rb)
 }
 
 /**
+ * @brief	Возвращает количество элементов доступных для записи(свободных).
+ *
+ * @param[in]	rb	дескриптор кольцевого буфера
+ *
+ * @retval	количество элементов доступных для записи(свободных)
+ */
+static inline size_t rb_get_data_fsize(const struct ring_buf *rb)
+{
+	return RING_BUF_SIZE - ((rb->array_tail - rb->array_head) & (RING_BUF_SIZE - 1));
+}
+
+/**
  * @brief	Переносит запрошенное количество элементов из кольцевого буфера
  *		в указанное место.
  *		Переносимые элементы удаляются из кольцевого буфера.
