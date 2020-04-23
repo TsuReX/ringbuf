@@ -15,7 +15,7 @@
 #include <stddef.h>
 
 /** Количество элементов кольцевого буфера. */
-#define RING_BUF_SIZE	256
+#define RING_BUF_SIZE	1024
 
 /** Структура-дескриптор кольцевого буфера. */
 struct ring_buf {
