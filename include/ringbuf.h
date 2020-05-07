@@ -68,7 +68,7 @@ static inline size_t rb_get_data_size(const struct ring_buf *rb)
  */
 static inline size_t rb_get_data_fsize(const struct ring_buf *rb)
 {
-	return RING_BUF_SIZE - ((rb->array_tail - rb->array_head) & (RING_BUF_SIZE - 1));
+	return (RING_BUF_SIZE - 1) - ((rb->array_tail - rb->array_head) & (RING_BUF_SIZE - 1));
 }
 
 /**
@@ -110,5 +110,15 @@ size_t rb_store_data(struct ring_buf *rb, const void *srcbuf, size_t size_to_sto
  * @retval		void
  */
 void rb_clear_data(struct ring_buf *rb);
+
+/**
+ * @brief	Смещает голову буфера на указанное количество элементов (отбрасывает их)
+ *
+ * @param[in,out]	ring_buf	дескриптор кольцевого буфера
+ * @param[in]		throw_size	количество отбрасываемых элементов
+ *
+ * @retval		количество отброшенных элементов
+ */
+size_t rb_throw_last_data(struct ring_buf *rb, size_t throw_size);
 
 #endif /* __RINGBUF_H */

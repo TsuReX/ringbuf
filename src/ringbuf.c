@@ -81,12 +81,14 @@ size_t rb_store_data(struct ring_buf *rb, const void *srcbuf, size_t size_to_sto
 	size_t p1_size = 0;
 	size_t p2_size = 0;
 
-	if ((RING_BUF_SIZE - used_size) == 1) /* Full buffer */
-		return 0;
-
 	if ((RING_BUF_SIZE - used_size - 1) < size_to_store) {
 		overflow = 1;
 		size_to_store = RING_BUF_SIZE - used_size - 1;
+	}
+
+	if ((RING_BUF_SIZE - used_size) == 1) { /* Full buffer */
+		rb->overflow = overflow;
+		return 0;
 	}
 
 	p1_size = size_to_store;
@@ -121,3 +123,23 @@ void rb_clear_data(struct ring_buf *rb)
 	rb->array_head = rb->array_tail;
 	rb->overflow = 0;
 }
+
+size_t rb_throw_last_data(struct ring_buf *rb, size_t throw_size)
+{
+	size_t head = rb->array_head;
+	size_t tail = rb->array_tail;
+	size_t used_size = (tail - head) & (RING_BUF_SIZE - 1);
+
+	if (throw_size >= used_size) {
+//		rb->array_head = 0;
+//		rb->array_head = = 0;
+		rb->array_head = tail;
+		return used_size;
+	}
+
+	rb->array_head = (head + throw_size) & (RING_BUF_SIZE - 1);
+	rb->overflow = 0;
+
+	return throw_size;
+}
+
